@@ -11,6 +11,8 @@ documentation = "https://docs.rs/omango-futex-rs"
 keywords = ["futex", "atomic-wait"]
 categories = ["no-std"]
 
+[dependencies]
+omango-util-rs = "0.1.1"
 
 [target.'cfg(windows)'.dependencies.windows-sys]
 version = "0.48.0"

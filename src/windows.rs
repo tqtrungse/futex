@@ -18,10 +18,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-use std::{
-    intrinsics::unlikely,
-    sync::atomic::AtomicU32,
-};
+use std::sync::atomic::AtomicU32;
+
+use omango_util_rs::hint::unlikely;
 
 use windows_sys::{
     Win32::{
