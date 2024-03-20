@@ -1,6 +1,10 @@
-# Omango-Futex-RS
+# Omango-Futex
 
 This is implement futex for Rust .<br />
+
+Compared with [atomic-wait](https://github.com/m-ou-se/atomic-wait/blob/main),
+it provides additional support [wait_until](https://github.com/tqtrungse/omango-futex/blob/master/src/lib.rs#L56)
+on Windows, Unix, FreeBSD.
 
 ## Table of Contents
 
@@ -13,7 +17,7 @@ This is implement futex for Rust .<br />
 Add this to your `Cargo.toml`:
 ```toml
 [dependencies]
-omango-futex-rs = "0.1.2"
+omango-futex = "0.1.0"
 ```
 
 ## Compatibility
