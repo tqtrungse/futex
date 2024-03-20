@@ -33,6 +33,11 @@ use std::sync::atomic::AtomicU32;
 #[path = "windows.rs"]
 mod platform;
 
+/// Unix 2.6.22+
+#[cfg(any(target_os = "linux", target_os = "android"))]
+#[path = "unix.rs"]
+mod platform;
+
 /// If the value is `value`, wait until woken up or expired.
 ///
 /// This function might also return spuriously,
