@@ -23,7 +23,7 @@ use std::{
     time::{Duration, SystemTime},
 };
 
-use omango_util_rs::hint::unlikely;
+use omango_util::hint::unlikely;
 
 #[inline]
 pub(crate) fn wait_until(atom: &AtomicU32, expected: u32, millis: u32) -> bool {
@@ -97,14 +97,13 @@ pub(crate) fn wake_all(ptr: *const AtomicU32) -> bool {
     true
 }
 
+#[inline]
 fn to_duration(millis: u32) -> *const libc::c_void {
-    // Convert timeout in milliseconds to Duration
     return match SystemTime::now().checked_add(Duration::from_millis(millis as u64)) {
         Some(time) => {
             let timespec = libc::timespec {
                 tv_sec: time.duration_since(SystemTime::UNIX_EPOCH).unwrap().as_secs() as i64,
-                // Convert nanoseconds to milliseconds
-                tv_nsec: (time.duration_since(SystemTime::UNIX_EPOCH).unwrap().subsec_nanos() / 1_000_000) as i64,
+                tv_nsec: time.duration_since(SystemTime::UNIX_EPOCH).unwrap().subsec_nanos() as i64,
             };
             &timespec as *const _ as *const libc::c_void
         }
