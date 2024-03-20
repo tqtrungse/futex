@@ -1,18 +1,18 @@
 [package]
-name = "omango-futex-rs"
-version = "0.1.2"
+name = "omango-futex"
+version = "0.1.0"
 authors = ["Trung Tran <tqtrungse@gmail.com>"]
 edition = "2021"
 description = "Futex for Rust"
 license = "MIT"
-repository = "https://github.com/tqtrungse/omango-futex-rs"
-homepage = "https://github.com/tqtrungse/omango-futex-rs"
-documentation = "https://docs.rs/omango-futex-rs"
+repository = "https://github.com/tqtrungse/omango-futex"
+homepage = "https://github.com/tqtrungse/omango-futex"
+documentation = "https://docs.rs/omango-futex"
 keywords = ["futex", "atomic-wait"]
 categories = ["no-std"]
 
 [dependencies]
-omango-util-rs = "0.1.1"
+omango-util = "0.1.0"
 
 [target.'cfg(windows)'.dependencies.windows-sys]
 version = "0.48.0"
