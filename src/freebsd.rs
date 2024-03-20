@@ -23,7 +23,7 @@ use std::{
     time::{Duration, SystemTime},
 };
 
-use omango_util_rs::hint::unlikely;
+use omango_util::hint::unlikely;
 
 #[inline]
 pub(crate) fn wait_until(atom: &AtomicU32, expected: u32, millis: u32) -> bool {

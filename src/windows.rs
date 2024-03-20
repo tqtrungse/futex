@@ -20,7 +20,7 @@
 
 use std::sync::atomic::AtomicU32;
 
-use omango_util_rs::hint::unlikely;
+use omango_util::hint::unlikely;
 
 use windows_sys::{
     Win32::{
