@@ -43,6 +43,11 @@ mod platform;
 #[path = "freebsd.rs"]
 mod platform;
 
+/// macOS 11+, iOS 14+, watchOS 7+
+#[cfg(any(target_os = "macos", target_os = "ios", target_os = "watchos"))]
+#[path = "macos.rs"]
+mod macos;
+
 /// If the value is `value`, wait until woken up or expired.
 ///
 /// This function might also return spuriously,
