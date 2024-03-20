@@ -38,6 +38,11 @@ mod platform;
 #[path = "unix.rs"]
 mod platform;
 
+/// FreeBSD 11+
+#[cfg(target_os = "freebsd")]
+#[path = "freebsd.rs"]
+mod platform;
+
 /// If the value is `value`, wait until woken up or expired.
 ///
 /// This function might also return spuriously,
