@@ -1,6 +1,6 @@
 # Omango-Futex-RS
 
-This is utilities crate for [omango](https://github.com/tqtrungse/omango) library .<br />
+This is implement futex for Rust .<br />
 
 ## Table of Contents
 
@@ -13,7 +13,7 @@ This is utilities crate for [omango](https://github.com/tqtrungse/omango) librar
 Add this to your `Cargo.toml`:
 ```toml
 [dependencies]
-omango-futex-rs = "0.1.1"
+omango-futex-rs = "0.1.2"
 ```
 
 ## Compatibility
