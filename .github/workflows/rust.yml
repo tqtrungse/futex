@@ -37,7 +37,7 @@ jobs:
         run: cargo check
   test_on_freeBSD:
     runs-on: ubuntu-latest
-    name: A job to run test in FreeBSD
+    name: Run test on FreeBSD
     steps:
       - uses: actions/checkout@v4
       - name: Test in FreeBSD
