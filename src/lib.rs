@@ -105,14 +105,6 @@ mod test {
     }
 
     #[test]
-    fn wait_unexpected() {
-        let t = Instant::now();
-        let a = AtomicU32::new(0);
-        wait(&a, 1);
-        assert!(t.elapsed().as_millis() < 100);
-    }
-
-    #[test]
     fn wait_wake() {
         let t = Instant::now();
         let a = AtomicU32::new(0);
@@ -130,6 +122,17 @@ mod test {
         });
     }
 
+    // macOS will be blocked forever.
+    #[test]
+    #[cfg(all(not(target_os = "macos"), not(target_os = "ios"), not(target_os = "watchos")))]
+    fn wait_unexpected() {
+        let t = Instant::now();
+        let a = AtomicU32::new(0);
+        wait(&a, 1);
+        assert!(t.elapsed().as_millis() < 100);
+    }
+
+    // macOS is not supported timeout.
     #[test]
     #[cfg(all(not(target_os = "macos"), not(target_os = "ios"), not(target_os = "watchos")))]
     fn wait_timeout() {
