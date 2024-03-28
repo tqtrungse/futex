@@ -74,15 +74,15 @@ pub(crate) fn wait(atom: &AtomicU32, expected: u32) -> bool {
     let ptr: *const AtomicU32 = atom;
     // The 'monitor' is just the notification counter associated
     // with the address of the atomic.
-    let monitor = unsafe { crate::futex::macos::__libcpp_atomic_monitor(ptr.cast()) };
+    let monitor = unsafe { crate::omango_futex::macos::__libcpp_atomic_monitor(ptr.cast()) };
 
-    unsafe { crate::futex::macos::__libcpp_atomic_wait(ptr.cast(), monitor) };
+    unsafe { crate::omango_futex::macos::__libcpp_atomic_wait(ptr.cast(), monitor) };
     true
 }
 
 #[inline]
 pub(crate) fn wake_one(ptr: *const AtomicU32) -> bool {
-    unsafe { crate::futex::macos::__cxx_atomic_notify_one(ptr.cast()) };
+    unsafe { crate::omango_futex::macos::__cxx_atomic_notify_one(ptr.cast()) };
     true
 }
 
