@@ -17,7 +17,7 @@ on Windows, Unix, FreeBSD.
 Add this to your `Cargo.toml`:
 ```toml
 [dependencies]
-omango-futex = "0.1.0"
+omango-futex = "0.1.1"
 ```
 
 ## Compatibility
