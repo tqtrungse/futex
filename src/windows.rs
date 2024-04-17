@@ -51,18 +51,18 @@ pub(crate) fn wait_until(atom: &AtomicU32, expected: u32, millis: u32) -> bool {
     true
 }
 
-#[inline]
+#[inline(always)]
 pub(crate) fn wait(atom: &AtomicU32, expected: u32) -> bool {
     wait_until(atom, expected, INFINITE)
 }
 
-#[inline]
+#[inline(always)]
 pub(crate) fn wake_one(atom_ptr: *const AtomicU32) -> bool {
     unsafe { WakeByAddressSingle(atom_ptr.cast()) };
     true
 }
 
-#[inline]
+#[inline(always)]
 pub(crate) fn wake_all(atom_ptr: *const AtomicU32) -> bool {
     unsafe { WakeByAddressAll(atom_ptr.cast()) };
     false

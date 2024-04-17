@@ -25,7 +25,7 @@ use std::{
 
 use omango_util::hint::unlikely;
 
-#[inline]
+#[inline(always)]
 pub(crate) fn wait_until(atom: &AtomicU32, expected: u32, millis: u32) -> bool {
     let code = unsafe {
         libc::syscall(
@@ -45,7 +45,7 @@ pub(crate) fn wait_until(atom: &AtomicU32, expected: u32, millis: u32) -> bool {
     true
 }
 
-#[inline]
+#[inline(always)]
 pub(crate) fn wait(atom: &AtomicU32, expected: u32) -> bool {
     // Be able to spurious wakeup.
     // https://man7.org/linux/man-pages/man2/futex.2.html
@@ -65,7 +65,7 @@ pub(crate) fn wait(atom: &AtomicU32, expected: u32) -> bool {
     true
 }
 
-#[inline]
+#[inline(always)]
 pub(crate) fn wake_one(ptr: *const AtomicU32) -> bool {
     let code = unsafe {
         libc::syscall(
@@ -81,7 +81,7 @@ pub(crate) fn wake_one(ptr: *const AtomicU32) -> bool {
     true
 }
 
-#[inline]
+#[inline(always)]
 pub(crate) fn wake_all(ptr: *const AtomicU32) -> bool {
     let code = unsafe {
         libc::syscall(
@@ -99,7 +99,7 @@ pub(crate) fn wake_all(ptr: *const AtomicU32) -> bool {
 
 #[inline]
 fn to_duration(millis: u32) -> *const libc::c_void {
-    return match SystemTime::now().checked_add(Duration::from_millis(millis as u64)) {
+    match SystemTime::now().checked_add(Duration::from_millis(millis as u64)) {
         Some(time) => {
             let timespec = libc::timespec {
                 tv_sec: time.duration_since(SystemTime::UNIX_EPOCH).unwrap().as_secs() as i64,
@@ -108,5 +108,5 @@ fn to_duration(millis: u32) -> *const libc::c_void {
             &timespec as *const _ as *const libc::c_void
         }
         None => std::ptr::null(),
-    };
+    }
 }

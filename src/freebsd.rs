@@ -25,7 +25,7 @@ use std::{
 
 use omango_util::hint::unlikely;
 
-#[inline]
+#[inline(always)]
 pub(crate) fn wait_until(atom: &AtomicU32, expected: u32, millis: u32) -> bool {
     let ptr: *const AtomicU32 = atom;
     let code = unsafe {
@@ -43,7 +43,7 @@ pub(crate) fn wait_until(atom: &AtomicU32, expected: u32, millis: u32) -> bool {
     true
 }
 
-#[inline]
+#[inline(always)]
 pub(crate) fn wait(atom: &AtomicU32, expected: u32) -> bool {
     let ptr: *const AtomicU32 = atom;
     let code = unsafe {
@@ -61,7 +61,7 @@ pub(crate) fn wait(atom: &AtomicU32, expected: u32) -> bool {
     true
 }
 
-#[inline]
+#[inline(always)]
 pub(crate) fn wake_one(ptr: *const AtomicU32) -> bool {
     let code = unsafe {
         libc::_umtx_op(
@@ -78,7 +78,7 @@ pub(crate) fn wake_one(ptr: *const AtomicU32) -> bool {
     true
 }
 
-#[inline]
+#[inline(always)]
 pub(crate) fn wake_all(ptr: *const AtomicU32) -> Option<Error> {
     let code = unsafe {
         libc::_umtx_op(

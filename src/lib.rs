@@ -52,7 +52,7 @@ mod platform;
 ///
 /// This function might also return spuriously,
 /// without a corresponding wake operation.
-#[inline]
+#[inline(always)]
 pub fn wait_until(atom: &AtomicU32, expected: u32, millis: u32) -> bool {
     platform::wait_until(atom, expected, millis)
 }
@@ -61,7 +61,7 @@ pub fn wait_until(atom: &AtomicU32, expected: u32, millis: u32) -> bool {
 ///
 /// This function might also return spuriously,
 /// without a corresponding wake operation.
-#[inline]
+#[inline(always)]
 pub fn wait(atom: &AtomicU32, expected: u32) -> bool {
     platform::wait(atom, expected)
 }
@@ -69,7 +69,7 @@ pub fn wait(atom: &AtomicU32, expected: u32) -> bool {
 /// Wake one thread that is waiting on this atomic.
 ///
 /// It's okay if the pointer dangles or is null.
-#[inline]
+#[inline(always)]
 pub fn wake_one(atom: *const AtomicU32) -> bool {
     platform::wake_one(atom)
 }
@@ -77,47 +77,39 @@ pub fn wake_one(atom: *const AtomicU32) -> bool {
 /// Wake all threads that are waiting on this atomic.
 ///
 /// It's okay if the pointer dangles or is null.
-#[inline]
+#[inline(always)]
 pub fn wake_all(atom: *const AtomicU32) -> bool {
     platform::wake_all(atom)
 }
 
 mod test {
-    use std::{
-        thread::sleep,
-        time::{Duration, Instant},
-        sync::atomic::{AtomicU32, Ordering},
-    };
-
-    use crate::platform::{wait, wait_until, wake_all, wake_one};
-
     #[test]
     fn wake_null() {
-        wake_one(std::ptr::null::<AtomicU32>());
-        wake_all(std::ptr::null::<AtomicU32>());
+        crate::wake_one(std::ptr::null::<std::sync::atomic::AtomicU32>());
+        crate::wake_all(std::ptr::null::<std::sync::atomic::AtomicU32>());
     }
 
     #[test]
     fn wake_nothing() {
-        let a = AtomicU32::new(0);
-        wake_one(&a);
-        wake_all(&a);
+        let a = std::sync::atomic::AtomicU32::new(0);
+        crate::wake_one(&a);
+        crate::wake_all(&a);
     }
 
     #[test]
     fn wait_wake() {
-        let t = Instant::now();
-        let a = AtomicU32::new(0);
+        let t = std::time::Instant::now();
+        let a = std::sync::atomic::AtomicU32::new(0);
         std::thread::scope(|s| {
             s.spawn(|| {
-                sleep(Duration::from_millis(100));
-                a.store(1, Ordering::Relaxed);
-                wake_one(&a);
+                std::thread::sleep(std::time::Duration::from_millis(100));
+                a.store(1, std::sync::atomic::Ordering::Relaxed);
+                crate::wake_one(&a);
             });
-            while a.load(Ordering::Relaxed) == 0 {
-                wait(&a, 0);
+            while a.load(std::sync::atomic::Ordering::Relaxed) == 0 {
+                crate::wait(&a, 0);
             }
-            assert_eq!(a.load(Ordering::Relaxed), 1);
+            assert_eq!(a.load(std::sync::atomic::Ordering::Relaxed), 1);
             assert!((90..400).contains(&t.elapsed().as_millis()));
         });
     }
@@ -126,9 +118,9 @@ mod test {
     #[test]
     #[cfg(all(not(target_os = "macos"), not(target_os = "ios"), not(target_os = "watchos")))]
     fn wait_unexpected() {
-        let t = Instant::now();
-        let a = AtomicU32::new(0);
-        wait(&a, 1);
+        let t = std::time::Instant::now();
+        let a = std::sync::atomic::AtomicU32::new(0);
+        crate::wait(&a, 1);
         assert!(t.elapsed().as_millis() < 100);
     }
 
@@ -136,10 +128,10 @@ mod test {
     #[test]
     #[cfg(all(not(target_os = "macos"), not(target_os = "ios"), not(target_os = "watchos")))]
     fn wait_timeout() {
-        let t = Instant::now();
-        let a = AtomicU32::new(0);
+        let t = std::time::Instant::now();
+        let a = std::sync::atomic::AtomicU32::new(0);
 
-        wait_until(&a, 0, 1000);
+        crate::wait_until(&a, 0, 1000);
         assert!((900..1030).contains(&t.elapsed().as_millis()));
     }
 }

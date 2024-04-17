@@ -64,12 +64,12 @@ extern "C" {
     // See https://reviews.llvm.org/D114119#3193088
 }
 
-#[inline]
+#[inline(always)]
 pub(crate) fn wait_until(_: &AtomicU32, _: u32, _: u32) -> bool {
     std::panic!("Not implement yet");
 }
 
-#[inline]
+#[inline(always)]
 pub(crate) fn wait(atom: &AtomicU32, expected: u32) -> bool {
     let ptr: *const AtomicU32 = atom;
     // The 'monitor' is just the notification counter associated
@@ -80,13 +80,13 @@ pub(crate) fn wait(atom: &AtomicU32, expected: u32) -> bool {
     true
 }
 
-#[inline]
+#[inline(always)]
 pub(crate) fn wake_one(ptr: *const AtomicU32) -> bool {
     unsafe { __cxx_atomic_notify_one(ptr.cast()) };
     true
 }
 
-#[inline]
+#[inline(always)]
 pub(crate) fn wake_all(ptr: *const AtomicU32) -> bool {
     unsafe { __cxx_atomic_notify_all(ptr.cast()) };
     true
