@@ -70,7 +70,7 @@ pub(crate) fn wait_until(_: &AtomicU32, _: u32, _: u32) -> bool {
 }
 
 #[inline(always)]
-pub(crate) fn wait(atom: &AtomicU32, expected: u32) -> bool {
+pub(crate) fn wait(atom: &AtomicU32, _: u32) -> bool {
     let ptr: *const AtomicU32 = atom;
     // The 'monitor' is just the notification counter associated
     // with the address of the atomic.
