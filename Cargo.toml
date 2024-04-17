@@ -1,6 +1,6 @@
 [package]
 name = "omango-futex"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Trung Tran <tqtrungse@gmail.com>"]
 edition = "2021"
 description = "Futex for Rust"
@@ -9,10 +9,10 @@ repository = "https://github.com/tqtrungse/omango-futex"
 homepage = "https://github.com/tqtrungse/omango-futex"
 documentation = "https://docs.rs/omango-futex"
 keywords = ["futex", "atomic-wait"]
-categories = ["no-std"]
+categories = ["concurrency"]
 
 [dependencies]
-omango-util = "0.1.0"
+omango-util = "0.1.5"
 
 [target.'cfg(windows)'.dependencies.windows-sys]
 version = "0.48.0"

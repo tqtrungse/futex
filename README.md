@@ -17,12 +17,12 @@ on Windows, Unix, FreeBSD.
 Add this to your `Cargo.toml`:
 ```toml
 [dependencies]
-omango-futex = "0.1.1"
+omango-futex = "0.1.2"
 ```
 
 ## Compatibility
 
-The minimum supported Rust version is 1.49.
+The minimum supported Rust version is `1.57`.
 
 ## License
 
