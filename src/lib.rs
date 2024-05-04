@@ -82,6 +82,7 @@ pub fn wake_all(atom: *const AtomicU32) -> bool {
     platform::wake_all(atom)
 }
 
+#[cfg(test)]
 mod test {
     #[test]
     fn wake_null() {
